@@ -18,7 +18,9 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 public class LoginPage extends VerticalLayout implements View {
+	
 	private static final long serialVersionUID = 1L;
+	
 	public static final String NAME = "";
 
 	public LoginPage(){
@@ -48,7 +50,9 @@ public class LoginPage extends VerticalLayout implements View {
 				if(WindowUI.AUTH.authenticate(username.getValue(), password.getValue())){
 					VaadinSession.getCurrent().setAttribute("user", username.getValue());
 					getUI().getNavigator().addView(SecurePage.NAME, SecurePage.class);
-					Page.getCurrent().setUriFragment("!"+SecurePage.NAME);
+					getUI().getNavigator().navigateTo(SecurePage.NAME);
+					
+					//Page.getCurrent().setUriFragment("!"+SecurePage.NAME);
 				}else{
 					Notification.show("Invalid credentials", Notification.Type.ERROR_MESSAGE);
 				}

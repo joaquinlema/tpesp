@@ -11,12 +11,14 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 public class SecurePage extends VerticalLayout implements View {
+
 	private static final long serialVersionUID = 1L;
 	private Label secure;
 	private Label currentUser;
 	private Button otherSecure;
 	private Button cargaDePost;
 	private Button logout;
+	
 	public static final String NAME = "Secure";
 
 	public SecurePage() {
@@ -27,23 +29,22 @@ public class SecurePage extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Page.getCurrent().setUriFragment("!"+OtherSecurePage.NAME);
+			getUI().getNavigator().addView(OtherSecurePage.NAME,OtherSecurePage.class);
+			getUI().getNavigator().navigateTo(OtherSecurePage.NAME);
 			}
 		});
-/*		
+
 		cargaDePost= new Button("cargaDePost");
 		cargaDePost.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				//getUI().getNavigator().addView(CargaDePost.NAME,CargaDePost.class );
-				//getUI().getNavigator().navigateTo(CargaDePost.NAME);
-				Page.getCurrent().setUriFragment("!"+CargaDePost.NAME);
-				
+			getUI().getNavigator().addView(CargaDePost.NAME, CargaDePost.class);
+			getUI().getNavigator().navigateTo(CargaDePost.NAME);
 			}
 		});
-	*/	
+	
 		logout = new Button("Logout");
 		logout.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -52,9 +53,10 @@ public class SecurePage extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				getUI().getNavigator().removeView(SecurePage.NAME);
 				getUI().getNavigator().removeView(OtherSecurePage.NAME);
-		//		getUI().getNavigator().removeView(CargaDePost.NAME);
+				getUI().getNavigator().removeView(CargaDePost.NAME);
+				
 				VaadinSession.getCurrent().setAttribute("user", null);
-				Page.getCurrent().setUriFragment("");
+				getUI().getNavigator().navigateTo(LoginPage.NAME);
 			}
 		});
 		
@@ -62,8 +64,8 @@ public class SecurePage extends VerticalLayout implements View {
 		currentUser = new Label("Current User");
 		addComponent(secure);
 		addComponent(currentUser);
-		addComponent(cargaDePost);
 		addComponent(otherSecure);
+		addComponent(cargaDePost);
 		addComponent(logout);
 	}
 
